@@ -39,10 +39,17 @@ public class ReflectionApiDemo {
         Field[] scFields =
             scReflection.getDeclaredFields();
         for (Field scField : scFields) {
-            scField.setAccessible(true);
-            System.out.printf("old %s = %s\n", scField.getName(), scField.get(sc));
-            scField.set(sc, 200);
-            System.out.printf("new %s = %s\n", scField.getName(), scField.get(sc));
+            if(Integer.class.isAssignableFrom(scField.getType())) {
+                scField.setAccessible(true);
+                System.out.printf("old %s = %s\n", scField.getName(), scField.get(sc));
+                scField.set(sc, 200);
+                System.out.printf("new %s = %s\n", scField.getName(), scField.get(sc));
+            }else if (String.class.isAssignableFrom(scField.getType())){
+                scField.setAccessible(true);
+                System.out.printf("old %s = %s\n", scField.getName(), scField.get(sc));
+                scField.set(sc, (scField.get(sc) + " world!"));
+                System.out.printf("new %s = %s\n", scField.getName(), scField.get(sc));
+            }
         }
     }
     
